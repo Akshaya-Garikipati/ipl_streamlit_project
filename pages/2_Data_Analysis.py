@@ -1,9 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-# -----------------------------------------
-# 1. Load Dataset
-# -----------------------------------------
+
 
 from pathlib import Path
 import pandas as pd
@@ -12,15 +10,9 @@ file_path = Path(__file__).parent.parent / "IPL_Matches_Data_2008_2026.csv"
 
 df = pd.read_csv(file_path)
 
-# -----------------------------------------
-# 2. Title
-# -----------------------------------------
 
 st.title("IPL Data Analysis")
 
-# -----------------------------------------
-# 3. Dataset
-# -----------------------------------------
 
 st.subheader("Dataset")
 
@@ -40,10 +32,6 @@ st.write("Dataset shape:", df.shape)
 st.write("Columns:")
 st.write(df.columns)
 
-# -----------------------------------------
-# 4. Dataset Shape
-# -----------------------------------------
-
 st.subheader("Dataset Shape")
 
 rows, columns = df.shape
@@ -51,9 +39,6 @@ rows, columns = df.shape
 st.write("Rows:", rows)
 st.write("Columns:", columns)
 
-# -----------------------------------------
-# 5. Missing Values
-# -----------------------------------------
 
 missing_values = df.isnull().sum()
 
@@ -61,9 +46,6 @@ st.subheader("Missing Values")
 
 st.dataframe(missing_values)
 
-# -----------------------------------------
-# 6. Dataset Metrics
-# -----------------------------------------
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -87,9 +69,6 @@ col4.metric(
     df["city"].nunique()
 )
 
-# -----------------------------------------
-# 7. Total Runs and Wickets
-# -----------------------------------------
 
 df["total_runs"] = (
     df["team1_runs"] +
@@ -101,9 +80,6 @@ df["total_wickets"] = (
     df["team2_wickets"]
 )
 
-# -----------------------------------------
-# 8. Average Runs
-# -----------------------------------------
 
 average_runs = df["total_runs"].mean()
 
@@ -112,9 +88,6 @@ st.metric(
     round(average_runs, 2)
 )
 
-# -----------------------------------------
-# 9. Highest Combined Score
-# -----------------------------------------
 
 highest_score = df["total_runs"].max()
 
@@ -123,9 +96,6 @@ st.metric(
     highest_score
 )
 
-# -----------------------------------------
-# 10. Prepare Season and Team Lists
-# -----------------------------------------
 
 seasons = sorted(
     df["season"].dropna().unique()
@@ -138,9 +108,6 @@ teams = sorted(
     ]).dropna().unique()
 )
 
-# -----------------------------------------
-# 11. Sidebar Filters
-# -----------------------------------------
 
 st.sidebar.title("Filters")
 
@@ -154,9 +121,6 @@ selected_team = st.sidebar.selectbox(
     teams
 )
 
-# -----------------------------------------
-# 12. Filter Dataset
-# -----------------------------------------
 
 filtered_df = df[
     (df["season"] == selected_season) &
@@ -173,9 +137,6 @@ st.dataframe(
     use_container_width=True
 )
 
-# -----------------------------------------
-# 13. Matches by Season
-# -----------------------------------------
 
 st.subheader("Matches by Season")
 
@@ -187,9 +148,6 @@ matches_by_season = (
 
 st.dataframe(matches_by_season)
 
-# -----------------------------------------
-# 14. Team Wins
-# -----------------------------------------
 
 st.subheader("Team Wins")
 
@@ -206,9 +164,6 @@ team_wins.columns = [
 
 st.dataframe(team_wins)
 
-# -----------------------------------------
-# 15. Top 10 Winners
-# -----------------------------------------
 
 st.subheader("Top 10 Winning Teams")
 
