@@ -4,33 +4,17 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 
 
-# --------------------------------------------------
-# Page Title
-# --------------------------------------------------
 
 st.title("IPL Data Analysis")
 
-
-# --------------------------------------------------
-# Load Dataset
-# --------------------------------------------------
-
 df = pd.read_csv("IPL_Matches_Data_2008_2026.csv")
 
-
-# --------------------------------------------------
-# Create Total Runs Column
-# --------------------------------------------------
 
 df["total_runs"] = (
     df["team1_runs"] +
     df["team2_runs"]
 )
 
-
-# --------------------------------------------------
-# Sidebar Filter
-# --------------------------------------------------
 
 st.sidebar.title("Filters")
 
@@ -43,10 +27,6 @@ filtered_df = df[
     df["season"] == selected_season
 ]
 
-
-# --------------------------------------------------
-# Key Statistics
-# --------------------------------------------------
 
 st.subheader("Key Statistics")
 
@@ -72,10 +52,6 @@ col4.metric(
     round(df["total_runs"].mean(), 2)
 )
 
-
-# --------------------------------------------------
-# Selected Season Statistics
-# --------------------------------------------------
 
 st.subheader(
     f"Analysis for Season: {selected_season}"
@@ -105,10 +81,6 @@ with col3:
     )
 
 
-# --------------------------------------------------
-# Filtered Dataset
-# --------------------------------------------------
-
 st.subheader("Filtered Data")
 
 st.dataframe(
@@ -116,10 +88,6 @@ st.dataframe(
     use_container_width=True
 )
 
-
-# --------------------------------------------------
-# Matches By Season
-# --------------------------------------------------
 
 season_matches = (
     df.groupby("season")
@@ -134,10 +102,6 @@ st.bar_chart(
 )
 
 
-# --------------------------------------------------
-# Total Runs By Season
-# --------------------------------------------------
-
 season_runs = (
     df.groupby("season")["total_runs"]
     .sum()
@@ -150,10 +114,6 @@ st.line_chart(
     season_runs.set_index("season")
 )
 
-
-# --------------------------------------------------
-# Top Winning Teams - All Seasons
-# --------------------------------------------------
 
 wins = (
     df["winner"]
@@ -180,10 +140,6 @@ st.plotly_chart(
 )
 
 
-# --------------------------------------------------
-# Winning Teams - Selected Season
-# --------------------------------------------------
-
 team_wins = (
     filtered_df["winner"]
     .value_counts()
@@ -207,10 +163,6 @@ st.plotly_chart(
     use_container_width=True
 )
 
-
-# --------------------------------------------------
-# Toss Decision Pie Chart
-# --------------------------------------------------
 
 toss_decision = (
     df["toss_decision"]
@@ -236,9 +188,6 @@ st.plotly_chart(
 )
 
 
-# --------------------------------------------------
-# Total Runs Histogram - Plotly
-# --------------------------------------------------
 
 fig3 = px.histogram(
     df,
@@ -253,10 +202,6 @@ st.plotly_chart(
 )
 
 
-# --------------------------------------------------
-# Selected Season Runs Histogram
-# --------------------------------------------------
-
 fig4 = px.histogram(
     filtered_df,
     x="total_runs",
@@ -270,10 +215,6 @@ st.plotly_chart(
 )
 
 
-# --------------------------------------------------
-# Scatter Plot
-# --------------------------------------------------
-
 fig5 = px.scatter(
     df,
     x="team1_runs",
@@ -286,10 +227,6 @@ st.plotly_chart(
     use_container_width=True
 )
 
-
-# --------------------------------------------------
-# Matplotlib Histogram
-# --------------------------------------------------
 
 fig, ax = plt.subplots()
 
@@ -313,10 +250,6 @@ ax.set_ylabel(
 st.pyplot(fig)
 
 
-# --------------------------------------------------
-# Two Column Analysis
-# --------------------------------------------------
-
 col1, col2 = st.columns(2)
 
 with col1:
@@ -336,10 +269,6 @@ with col2:
     )
 
 
-# --------------------------------------------------
-# Complete Dataset
-# --------------------------------------------------
-
 with st.expander("View Complete Dataset"):
 
     st.dataframe(
@@ -347,10 +276,6 @@ with st.expander("View Complete Dataset"):
         use_container_width=True
     )
 
-
-# --------------------------------------------------
-# Statistical Summary
-# --------------------------------------------------
 
 with st.expander("View Statistical Summary"):
 
